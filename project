@@ -27,11 +27,9 @@ scissors = '''
 ---.__(___)
 '''
 
-
 user_score = 0
 computer_score = 0
 draw = 0
-
 
 def end_game():
     global user_score
@@ -42,6 +40,14 @@ def end_game():
           f"Computer Score = {computer_score}\n"
           f"Draws = {draw}\n")
 
+def display_score():
+    global user_score
+    global computer_score
+    global draw
+    print("Here is the current score:\n"
+          f"User Score = {user_score}\n"
+          f"Computer Score = {computer_score}\n"
+          f"Draws = {draw}\n")
 
 def rock_paper_scissors():
     global user_score
@@ -52,45 +58,35 @@ def rock_paper_scissors():
     if user_choice >= 3 or user_choice < 0:
         print("Invalid choice. You lose.")
         computer_score += 1
-        print(f"User Score = {user_score}\n"
-              f"Computer Score = {computer_score}\n"
-              f"Draws = {draw}\n")
-        keep_playing = input("Would you like to play again? Type 'Y' for Yes or 'N' for No.\n").lower()
-        if keep_playing == 'y':
-            user_choice = int(input("What do you choose? 0 for Rock, 1 for Paper and 2 for Scissors.\n"))
-            print(game_hands[user_choice])
-            computer_choice = random.randint(0, 2)
-            print(f"Computer chose: {game_hands[computer_choice]}")
+    else:
+        print(game_hands[user_choice])
+        computer_choice = random.randint(0, 2)
+        print(f"Computer chose: {game_hands[computer_choice]}")
+        if user_choice == 0 and computer_choice == 2:
+            print("You win!")
+            user_score += 1
+            display_score()
+        elif computer_choice == 0 and user_choice == 2:
+            print("You lose.")
+            computer_score += 1
+            display_score()
+        elif user_choice > computer_choice:
+            print("You win!")
+            user_score += 1
+            display_score()
+        elif computer_choice > user_choice:
+            print("You lose.")
+            computer_score += 1
+            display_score()
+        elif user_choice == computer_choice:
+            print("Draw.")
+            draw += 1
+            display_score()
 
-            if user_choice == 0 and computer_choice == 2:
-                print("You win!")
-                user_score += 1
-                print(f"User Score = {user_score}\n"
-                      f"Computer Score = {computer_score}\n"
-                      f"Draws = {draw}\n")
-            elif computer_choice == 0 and user_choice == 2:
-                print("You lose.")
-                computer_score += 1
-                print(f"User Score = {user_score}\n"
-                      f"Computer Score = {computer_score}\n"
-                      f"Draws = {draw}\n")
-            elif user_choice > computer_choice:
-                print("You win!")
-                user_score += 1
-                print(f"User Score = {user_score}\n"
-                      f"Computer Score = {computer_score}\n"
-                      f"Draws = {draw}\n")
-            elif computer_choice > user_choice:
-                print("You lose.")
-                computer_score += 1
-                print(f"User Score = {user_score}\n"
-                      f"Computer Score = {computer_score}\n"
-                      f"Draws = {draw}\n")
-            elif user_choice == computer_choice:
-                print("Draw.")
-                draw += 1
-                print(f"User Score = {user_score}\n"
-                      f"Computer Score = {computer_score}\n"
-                      f"Draws = {draw}\n")
-    rock_paper_scissors()
+    keep_playing = input("Would you like to play again? Type 'Y' for Yes or 'N' for No.\n").lower()
+    if keep_playing == 'y':
+        rock_paper_scissors()
+    else:
+        end_game()
+
 rock_paper_scissors()
